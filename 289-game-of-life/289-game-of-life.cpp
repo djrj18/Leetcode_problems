@@ -3,6 +3,7 @@ public:
     void gameOfLife(vector<vector<int>>& board) {
         int n = board.size();
         int m = board[0].size();
+        // create new matrix of same size as we can't change in the same matrix because we have to account all alive neighbours before changing.
         vector<vector<int>> ans(n,vector<int>(m));
         
         int diri[8] = {0,-1,-1,-1,0,1,1,1};
@@ -11,6 +12,7 @@ public:
         for(int i = 0;i<n;i++){
             for(int j = 0;j<m;j++){
                 int alive = 0;
+                // check for all 8 directions and count how many of them are alive/1.
                 for(int k = 0;k<8;k++){
                     if(i+diri[k] >=0 and i+diri[k] < n and j+dirj[k] >=0 and j+dirj[k] < m){
                         if(board[i+diri[k]][j+dirj[k]]){
