@@ -1,0 +1,6 @@
+if current root value is equal to given value then simply return that node.
+if current root value is greater than given value then desired node would be in left subtree.
+if current root value id less than given value then desired node would be in right subtree.
+if current root is NULL then there is no such node whose value equal to given node.
+Time Complexity = O(n) ;
+Space Complexity = O(Height of Tree) as we are traversing either in left subtree or right subtree based on conditions.
