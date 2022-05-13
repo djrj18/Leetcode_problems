@@ -18,34 +18,53 @@ public:
 
 class Solution {
 public:
-    Node* connect(Node* root) {
+    void solve(Node *&root){
         if(root == NULL){
-            return root;
+            return;
         }
-        queue<Node*> q;
-        q.push(root);
-        while(q.size()){
-            int s = q.size();
-            for(int i = 0;i<s-1;i++){
-                Node *t = q.front();
+        Node *t = root;
+        Node *curr = NULL;
+        while(t){
+            if(curr){
                 if(t->left){
-                    q.push(t->left);
+                    curr->next = t->left;
+                    curr = t->left;
+                    if(t->right){
+                        curr->next = t->right;
+                        curr = t->right;
+                    }
                 }
-                if(t->right){
-                    q.push(t->right);
+                else if(t->right){
+                    curr->next = t->right;
+                    curr = t->right;
                 }
-                q.pop();
-                t->next = q.front();
             }
-            Node *t = q.front();
-            if(t->left){
-                q.push(t->left);
+            else{
+                if(t->left){
+                    curr = t->left;
+                    if(t->right){
+                        curr->next = t->right;
+                        curr = t->right;
+                    }
+                }
+                else if(t->right){
+                    curr = t->right;
+                }
             }
-            if(t->right){
-                q.push(t->right);
-            }
-            q.pop();
+            t = t->next;
         }
+       
+        
+        
+       
+            solve(root->left);
+       
+            solve(root->right);
+        
+        
+    }
+    Node* connect(Node* root) {
+        solve(root);
         return root;
     }
 };
