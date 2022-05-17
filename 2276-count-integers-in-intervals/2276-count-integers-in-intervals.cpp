@@ -7,7 +7,7 @@ public:
     }
     
     void add(int left, int right) {
-      auto it = st.upper_bound({left,INT_MIN});
+      auto it = st.upper_bound({left,0});
         if(it != st.begin() and (--it)->second < left){
             ++it;
         }
