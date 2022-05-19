@@ -8,21 +8,17 @@ public:
         }
         
         int ans = 0;
-        for(auto data : mp){
-          if(data.second%3 == 0){
-              ans += data.second/3;
-          }
-          else if(data.second%3 == 2 or (data.second%3 == 1 and data.second > 1)){
-              ans += data.second/3 +1;
-          }  
-          else if(data.second%2 == 0){
-              ans += data.second/2;
-          }
-            else{
+        for(auto data :mp){
+            if(data.second == 1){
                 return -1;
             }
+            if(data.second%3 == 0){
+                ans += data.second/3;
+            }
+            else{
+                ans += data.second/3 + 1;
+            }
         }
-        
         return ans;
         
     }
