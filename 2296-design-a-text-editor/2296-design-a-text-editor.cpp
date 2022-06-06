@@ -7,7 +7,7 @@ public:
     }
     
     void addText(string text) {
-        Before.insert(Before.length(),text);        
+        Before += text;      
     }
     
     int deleteText(int k) {
