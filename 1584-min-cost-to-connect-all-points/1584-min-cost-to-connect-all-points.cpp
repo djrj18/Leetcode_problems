@@ -2,38 +2,41 @@ class Solution {
 public:
     int minCostConnectPoints(vector<vector<int>>& points) {
         int n = points.size();
-        map<int,vector<pair<int,int>>> nbrs;
-        for(int i = 0;i<n;i++){
-            for(int j = i+1;j<n;j++){
-                int cost = abs(points[i][0] - points[j][0])+abs(points[i][1] - points[j][1]);
-                nbrs[i].push_back({j,cost});
-                nbrs[j].push_back({i,cost});
-            }
-        }
-        
-        vector<int> dis(n,INT_MAX);
-        priority_queue<pair<int,int>,vector<pair<int,int>> ,greater<pair<int,int>>> q;
-        vector<bool> visited(n,false);
-        q.push({0,0});
-        int ans = 0;
-        while(q.size()){
-            pair<int,int> p = q.top();
-            q.pop();
-            if(visited[p.second] == false){
-                  ans += p.first;
-                  //cout<<p.first<<" ";
-            }
-        
-            visited[p.second] = true;
-            for(auto nbr : nbrs[p.second]){
-                if(visited[nbr.first] == false and dis[nbr.first] > nbr.second){
-                    dis[nbr.first] = nbr.second;
-                    q.push({nbr.second,nbr.first});
+        vector<vector<pair<int,int>>> g(n);
+        for(int i = 0 ; i < n ;i++){
+            for(int j = 0 ; j < n ;j++){
+                if(i != j){
+                    int d = abs(points[i][0] - points[j][0])+abs(points[i][1] - points[j][1]);
+                    g[i].push_back({j,d});
+                    g[j].push_back({i,d});
                 }
             }
         }
         
-        return ans;
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        pq.push({0,0});
+        vector<int> visited(n,0),dis(n,INT_MAX);
+        dis[0] = 0;
+        while(pq.size()){
+            pair<int,int> p = pq.top();
+            pq.pop();
+            int d = p.first;
+            int node = p.second;
+            visited[node] = 1;
+            for(auto nb : g[node]){
+                if(!visited[nb.first] and dis[nb.first] > nb.second){
+                    dis[nb.first] = nb.second;
+                    pq.push({nb.second,nb.first});
+                }
+            }
+        }
         
+        int ans = 0;
+        for(auto d : dis){
+           
+            ans += d;
+        }
+        
+        return ans;
     }
 };
