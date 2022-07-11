@@ -1,35 +1,35 @@
 class Solution {
 public:
     bool checkValidString(string s) {
-        int n = s.length();
-       vector<vector<bool>> dp(n,vector<bool>(n,false));
-        
-        for(int G = 0 ; G < n ;G++){
-            int i = 0;
-            int j = G+i;
-            while(j < n){
-                if(G == 0){
-                    dp[i][j] = s[i] == '*';
-                }else if(G == 1){
-                    if((s[i] == '(' or s[i] == '*') and (s[j] == ')' or s[j] == '*')){
-                        dp[i][j] = true;
-                    }
+        stack<pair<int,char>> star,open;
+        for(int i = 0 ; i < s.length() ;i++){
+            if(s[i] == '('){
+                open.push({i,s[i]});
+            }else if(s[i] == '*'){
+                star.push({i,s[i]});
+            }else{
+                if(!open.empty()){
+                    open.pop();
+                }else if(!star.empty()){
+                    star.pop();
                 }else{
-                    
-                    if((s[i] == '(' or s[i] == '*') and (s[j] == ')' or s[j] == '*')){
-                        dp[i][j] = dp[i+1][j-1];
-                    }
-                    if(!dp[i][j]){
-                    for(int k = i ; k < j ;k++){
-                        dp[i][j] = dp[i][j] or (dp[i][k]&&dp[k+1][j]);
-                    }
-                    }
-                    
+                    return false;
                 }
-                i++;
-                j++;
             }
         }
-        return dp[0][n-1];
+        
+        while(open.size()){
+            if(star.size() == 0){
+                return false;
+            }
+            if(open.top().first > star.top().first){
+                return false;
+            }
+            open.pop();
+            star.pop();
+        }
+        
+        return true;
+        
     }
 };
