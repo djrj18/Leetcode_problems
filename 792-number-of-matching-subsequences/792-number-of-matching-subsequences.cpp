@@ -11,10 +11,10 @@ public:
             int prevInd = -1;
             bool mila = true;
             for(auto ch : str){
-                if(ind[ch - 'a'].size() == 0){
-                    mila = false;
-                    break;
-                }
+                // if(ind[ch - 'a'].size() == 0){
+                //     mila = false;
+                //     break;
+                // }
                 int id = upper_bound(ind[ch - 'a'].begin(),ind[ch - 'a'].end(), prevInd) - ind[ch - 'a'].begin();
                 if(id == ind[ch - 'a'].size()){
                     mila = false;
