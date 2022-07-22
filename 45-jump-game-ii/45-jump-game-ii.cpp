@@ -2,17 +2,18 @@ class Solution {
 public:
     int jump(vector<int>& nums) {
         int n = nums.size();
-        vector<int> dp(n);
-        dp[n-1] = 0;
-        for(int i = n-2 ; i >= 0 ;i--){
-            dp[i] = INT_MAX;
-            for(int j = i+1; j <= min(i+nums[i],n-1) ;j++){
-                if(dp[j] != INT_MAX){
-                dp[i] = min(dp[i],dp[j]+1);
-                }
-            }
+        int jump = 0;
+        int maxReach = 0;
+        int currReach = 0;
+        for(int i = 0  ;i < n-1 ;i++){
+           maxReach = max(maxReach,i+nums[i]);
+           if(i == currReach){
+               jump++;
+               currReach = maxReach;
+           } 
         }
         
-        return dp[0];
+        
+       return jump;
     }
 };
