@@ -15,14 +15,14 @@ public:
             int a = triplets[i][0];
             int b = triplets[i][1];
             int c = triplets[i][2];
-            
-            if(a == x and b <= y and c <= z){
+            if(a > x or b > y or c > z) continue;
+            if(a == x ){
                 Xmila = true;
             }
-            if(b == y and a <= x and c <= z){
+            if(b == y){
                 Ymila = true;
             }
-            if(c == z and a <= x and b <= y){
+            if(c == z){
                 Zmila = true;
             }
             if(Xmila and Ymila and Zmila){
