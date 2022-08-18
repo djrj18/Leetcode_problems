@@ -2,17 +2,18 @@ class Solution {
 public:
     int minSetSize(vector<int>& arr) {
         map<int,int> fr;
+        vector<int> v;
+        
         for(auto num : arr) fr[num]++;
-        priority_queue<pair<int,int>> pq;
-        for(auto d : fr) pq.push({d.second,d.first});
+        for(auto d : fr) v.push_back(d.second);
         
         int n = arr.size();
         int k  = n;
+        sort(v.begin(),v.end());
+        int i = v.size() -1;
         int ans = 0;
         while( k > n/2){
-            pair<int,int> p = pq.top();
-            pq.pop();
-            k -= p.first;
+            k -= v[i--];
             ans++;
         }
         return ans;
