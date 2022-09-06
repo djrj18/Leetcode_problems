@@ -18,15 +18,13 @@ public:
         int l = solve(root->left);
         int r = solve(root->right);
         if(l == 0) root->left = NULL;
-        if(r == 0) root->right = NULL;
-        
-        if(l == 0 and r == 0 and ans == 0) root = NULL;
-        
+        if(r == 0) root->right = NULL;  
         return l+r+ans;
     }
     TreeNode* pruneTree(TreeNode* root) {
         
-        solve(root);
-        return root;
+       int val =  solve(root);
+        
+        return val == 0 ? NULL : root;
     }
 };
