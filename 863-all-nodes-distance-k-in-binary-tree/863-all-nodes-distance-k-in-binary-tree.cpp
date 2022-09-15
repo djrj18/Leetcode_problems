@@ -9,11 +9,11 @@
  */
 class Solution {
 public:
-    void kDistanceNodesInSubtree(TreeNode * root,int k,vector<int> &nodes){
-        if(root == NULL) return;
+    void kDistanceNodesInSubtree(TreeNode * root,int k,vector<int> &nodes,map<TreeNode*,bool> &visited){
+        if(root == NULL or visited[root]) return;
         if(k == 0) {nodes.push_back(root->val);return;}
-        kDistanceNodesInSubtree(root->left,k-1,nodes);
-        kDistanceNodesInSubtree(root->right,k-1,nodes);
+        kDistanceNodesInSubtree(root->left,k-1,nodes,visited);
+        kDistanceNodesInSubtree(root->right,k-1,nodes,visited);
     }
     void StoreParents(TreeNode*root,map<TreeNode*,pair<TreeNode*,int>> & par){
         if(root == NULL) return;
@@ -25,16 +25,17 @@ public:
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
         vector<int> ans;
         map<TreeNode*,pair<TreeNode*,int>> par;
+        map<TreeNode*,bool> visited;
         StoreParents(root,par);
         while(target != root and k){
-            kDistanceNodesInSubtree(target,k,ans);
+            kDistanceNodesInSubtree(target,k,ans,visited);
             k--;
             pair<TreeNode*,int>p = par[target];
-            if(p.second == 0) p.first->left = NULL;
-            else p.first->right = NULL;
+            if(p.second == 0) visited[p.first->left] = true;
+            else visited[p.first->right] = true;
             target = p.first;
         }
-        kDistanceNodesInSubtree(target,k,ans);
+        kDistanceNodesInSubtree(target,k,ans,visited);
         return ans;
     }
 };
