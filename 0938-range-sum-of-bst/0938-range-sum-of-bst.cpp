@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    void Sum(TreeNode *&root, int &ans, int &low, int &high){
+    void Sum(TreeNode *root, int &ans, int &low, int &high){
         if(root == NULL) return;
         if(root->val >= low and root->val <= high){
             ans += root->val;
